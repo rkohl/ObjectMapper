@@ -24,4 +24,8 @@ Carthage/Build
 
 # Swift package manager
 .build/
-Packages/
+/.build
+/Packages
+/*.xcodeproj
+/.swiftpm
+Package.resolved
