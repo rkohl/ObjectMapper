@@ -4,19 +4,32 @@ import PackageDescription
 
 let package = Package(
     name: "ObjectMapper",
+    platforms: [
+        .iOS("12.0")
+    ],
     products: [
-    .library(
-        name: "ObjectMapper",
-        targets: ["ObjectMapper"])
+        .library(
+            name: "ObjectMapper",
+            targets: ["ObjectMapper"]
+        )
+    ],
+    dependencies: [
+        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.1.0")),
     ],
     targets: [
         .target(
             name: "ObjectMapper",
-            path: "Sources"
+            dependencies: [
+                "Alamofire"
+            ]
         ),
         .testTarget(
             name: "ObjectMapperTests",
-            dependencies: ["ObjectMapper"])
+            dependencies: [
+                "ObjectMapper",
+                "Alamofire"
+            ]
+        )
     ],
     swiftLanguageVersions: [.v5]
 )

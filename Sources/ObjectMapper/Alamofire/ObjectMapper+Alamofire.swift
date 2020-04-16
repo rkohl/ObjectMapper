@@ -1,6 +1,6 @@
 //
-//  Request.swift
-//  AlamofireObjectMapper
+//  ObjectMapper+Alamofire.swift
+//  ObjectMapperAlamofire
 //
 //  Created by Tristan Himmelman on 2015-04-30.
 //
@@ -28,7 +28,6 @@
 
 import Foundation
 import Alamofire
-import ObjectMapper
 
 extension DataRequest {
     

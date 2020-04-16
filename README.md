@@ -1,11 +1,11 @@
 ObjectMapper
 ============
-[![CocoaPods](https://img.shields.io/cocoapods/v/ObjectMapper.svg)](https://github.com/tristanhimmelman/ObjectMapper)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Swift Package Manager](https://rawgit.com/jlyonsmith/artwork/master/SwiftPackageManager/swiftpackagemanager-compatible.svg)](https://swift.org/package-manager/)
-[![Build Status](https://travis-ci.org/tristanhimmelman/ObjectMapper.svg?branch=master)](https://travis-ci.org/tristanhimmelman/ObjectMapper)
 
-ObjectMapper is a framework written in Swift that makes it easy for you to convert your model objects (classes and structs) to and from JSON. 
+[![Swift Package Manager](https://rawgit.com/jlyonsmith/artwork/master/SwiftPackageManager/swiftpackagemanager-compatible.svg)](https://swift.org/package-manager/)
+
+ObjectMapper is a framework written in Swift that makes it easy for you to convert your model objects (classes and structs) to and from JSON. Uses [Alamofire](https://github.com/Alamofire/Alamofire.git)
+
+[Original Framework](https://github.com/tristanhimmelman/ObjectMapper)
 
 - [Features](#features)
 - [The Basics](#the-basics)
@@ -22,6 +22,7 @@ ObjectMapper is a framework written in Swift that makes it easy for you to conve
 - [Installation](#installation)
 
 # Features:
+- Mapping using Alamofire response to objects
 - Mapping JSON to objects
 - Mapping objects to JSON
 - Nested Objects (stand alone, in arrays or in dictionaries)
@@ -417,68 +418,10 @@ let context = Context()
 let user = Mapper<User>(context: context).map(JSONString)
 ```
 
-# ObjectMapper + Alamofire
-
-If you are using [Alamofire](https://github.com/Alamofire/Alamofire) for networking and you want to convert your responses to Swift objects, you can use [AlamofireObjectMapper](https://github.com/tristanhimmelman/AlamofireObjectMapper). It is a simple Alamofire extension that uses ObjectMapper to automatically map JSON response data to Swift objects.
-
-
-# ObjectMapper + Realm
-
-ObjectMapper and Realm can be used together. Simply follow the class structure below and you will be able to use ObjectMapper to generate your Realm models:
-
-```swift
-class Model: Object, Mappable {
-    dynamic var name = ""
-
-    required convenience init?(map: Map) {
-        self.init()
-    }
-
-    func mapping(map: Map) {
-        name <- map["name"]
-    }
-}
-```
-
-If you want to serialize associated RealmObjects, you can use [ObjectMapper+Realm](https://github.com/jakenberg/ObjectMapper-Realm). It is a simple Realm extension that serializes arbitrary JSON into Realm's `List` class.
-
-To serialize Swift `String`, `Int`, `Double` and `Bool` arrays you can use [ObjectMapperAdditions/Realm](https://github.com/APUtils/ObjectMapperAdditions#realm-features). It'll wrap Swift types into RealmValues that can be stored in Realm's `List` class.
-
-Note: Generating a JSON string of a Realm Object using ObjectMappers' `toJSON` function only works within a Realm write transaction. This is because ObjectMapper uses the `inout` flag in its mapping functions (`<-`) which are used both for serializing and deserializing. Realm detects the flag and forces the `toJSON` function to be called within a write block even though the objects are not being modified.
-
-# Projects Using ObjectMapper
-- [Xcode Plugin for generating `Mappable` and `ImmutableMappable` code](https://github.com/liyanhuadev/ObjectMapper-Plugin)
-
-- [Json4Swift - Supports generating `ImmutableMappable` structs online (no plugins needed)](http://www.json4swift.com)
-
-If you have a project that utilizes, extends or provides tooling for ObjectMapper, please submit a PR with a link to your project in this section of the README.
-
-# To Do
-- Improve error handling. Perhaps using `throws`
-- Class cluster documentation
-
-# Contributing
-
-Contributions are very welcome 👍😃. 
-
-Before submitting any pull request, please ensure you have run the included tests and they have passed. If you are including new functionality, please write test cases for it as well.
-
 # Installation
-### Cocoapods
-ObjectMapper can be added to your project using [CocoaPods 0.36 or later](http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/) by adding the following line to your `Podfile`:
-
-```ruby
-pod 'ObjectMapper', '~> 3.5' (check releases to make sure this is the latest version)
-```
-
-### Carthage
-If you're using [Carthage](https://github.com/Carthage/Carthage) you can add a dependency on ObjectMapper by adding it to your `Cartfile`:
-
-```
-github "tristanhimmelman/ObjectMapper" ~> 3.5 (check releases to make sure this is the latest version)
-```
 
 ### Swift Package Manager
+#### Preferred
 To add ObjectMapper to a [Swift Package Manager](https://swift.org/package-manager/) based project, add:
 
 ```swift
@@ -486,13 +429,3 @@ To add ObjectMapper to a [Swift Package Manager](https://swift.org/package-manag
 ```
 to your `Package.swift` files `dependencies` array.
 
-### Submodule
-Otherwise, ObjectMapper can be added as a submodule:
-
-1. Add ObjectMapper as a [submodule](http://git-scm.com/docs/git-submodule) by opening the terminal, `cd`-ing into your top-level project directory, and entering the command `git submodule add https://github.com/tristanhimmelman/ObjectMapper.git`
-2. Open the `ObjectMapper` folder, and drag `ObjectMapper.xcodeproj` into the file navigator of your app project.
-3. In Xcode, navigate to the target configuration window by clicking on the blue project icon, and selecting the application target under the "Targets" heading in the sidebar.
-4. Ensure that the deployment target of `ObjectMapper.framework` matches that of the application target.
-5. In the tab bar at the top of that window, open the "Build Phases" panel.
-6. Expand the "Target Dependencies" group, and add `ObjectMapper.framework`.
-7. Click on the `+` button at the top left of the panel and select "New Copy Files Phase". Rename this new phase to "Copy Frameworks", set the "Destination" to "Frameworks", and add `ObjectMapper.framework`.
