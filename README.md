@@ -425,7 +425,7 @@ let user = Mapper<User>(context: context).map(JSONString)
 To add ObjectMapper to a [Swift Package Manager](https://swift.org/package-manager/) based project, add:
 
 ```swift
-.Package(url: "https://github.com/tristanhimmelman/ObjectMapper.git", majorVersion: 3, minor: 4),
+.Package(url: "https://github.com/rkohl/ObjectMapper.git", majorVersion: 4, minor: 0),
 ```
 to your `Package.swift` files `dependencies` array.
 
